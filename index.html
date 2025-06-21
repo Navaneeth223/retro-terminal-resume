@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retro Terminal Resume</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: #00ff00;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 16px;
+      padding: 20px;
+    }
+    #terminal {
+      max-width: 800px;
+      margin: auto;
+      white-space: pre-wrap;
+    }
+    .input-line {
+      display: flex;
+    }
+    .input-line span {
+      flex-shrink: 0;
+    }
+    input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #00ff00;
+      font-family: inherit;
+      font-size: inherit;
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal">
+    <div>Welcome to Navaneeth KV's Retro Terminal Resume!</div>
+    <div>Type <strong>help</strong> to get started.</div>
+    <div class="input-line">
+      <span>&gt;&nbsp;</span><input type="text" id="commandInput" autofocus />
+    </div>
+  </div>
+
+  <script>
+    const terminal = document.getElementById('terminal');
+    const input = document.getElementById('commandInput');
+
+    const commands = {
+      help: `Available commands:
+  about      - Learn about me
+  skills     - View my technical skills
+  projects   - See my projects
+  contact    - Contact information
+  clear      - Clear the terminal`,
+
+      about: `I'm Navaneeth KV, a passionate web and Flutter developer.
+I build interactive, creative, and user-friendly applications.`,
+
+      skills: `- HTML, CSS, JavaScript
+- Flutter, Dart
+- Node.js, MongoDB
+- Unity, Unreal Engine, Blender
+- Three.js, Firebase, PostgreSQL` ,
+
+      projects: `1. Bread Factory - Web supply chain tracker
+2. One Touch - App hub in Flutter
+3. Endless Forest - 3D open-world game
+4. Conquer the Mountain - Indie solo game with magical worlds`,
+
+      contact: `Email   : navaneethkv1002@gmail.com
+Phone   : 8078164791
+GitHub  : github.com/Navaneeth223
+LinkedIn: linkedin.com/in/navaneeth-kv-270386214/` ,
+
+      clear: 'clear'
+    };
+
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        const cmd = input.value.trim();
+        const output = document.createElement('div');
+        output.innerHTML = `> ${cmd}`;
+        terminal.insertBefore(output, input.parentElement);
+        input.value = '';
+
+        const response = commands[cmd.toLowerCase()];
+
+        if (cmd.toLowerCase() === 'clear') {
+          terminal.innerHTML = '';
+          terminal.appendChild(input.parentElement);
+          return;
+        }
+
+        const result = document.createElement('div');
+        result.textContent = response || 'Command not found. Type "help" for options.';
+        terminal.insertBefore(result, input.parentElement);
+
+        terminal.scrollTop = terminal.scrollHeight;
+      }
+    });
+  </script>
+</body>
+</html>
